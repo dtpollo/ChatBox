@@ -3,27 +3,30 @@ from openai import OpenAI
 import pandas as pd
 import os
 
-# API
-os.environ['OPENAI_API_KEY'] = ''
+# --- Campo para ingresar la API Key ---
+api_key = st.text_input("🔑 Ingresa tu OpenAI API Key:", type="password")
 
-# Init
-client = OpenAI()
+if api_key:
+    os.environ["OPENAI_API_KEY"] = api_key
+    client = OpenAI()
+else:
+    st.warning("Por favor, ingresa tu API Key para continuar.")
+    st.stop()
 
-# Import dataset
-df = pd.read_csv('vgsales.csv')
+# --- Cargar dataset ---
+df = pd.read_csv("vgsales.csv")
 
-# Keep only first 100 rows
+# Tomar solo los primeros 100 registros
 df_subset = df.head(100)
-
-# Convert those 100 rows to string
 df_string = df_subset.to_string()
 
-# Tittle
+# --- Interfaz principal ---
 st.title("🎮 Asistente de Videojuegos")
 
-# Questions
+# Campo de pregunta
 user_input = st.text_input("Escribe tu pregunta sobre los videojuegos:")
 
+# --- Lógica principal ---
 if user_input:
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
