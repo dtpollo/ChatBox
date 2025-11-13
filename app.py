@@ -4,7 +4,9 @@ from openai import OpenAI
 import pandas as pd
 
 # Leer API key del entorno
-api_key = os.getenv("OPENAI_API_KEY")
+#api_key = os.getenv("OPENAI_API_KEY")
+# Leer API key del entorno
+api_key = OPENAI_API_KEY
 
 if not api_key:
     st.error("❌ No se encontró la clave de API. Asegúrate de configurarla en GitHub o Streamlit.")
